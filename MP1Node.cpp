@@ -301,25 +301,27 @@ void MP1Node::nodeLoopOps() {
 }
 
 void MP1Node::gossipMembershipList() {
-    for (int i = 0; i < 5; i++) {
-        int randomIndex = (int) rand() % memberNode->memberList.size();
-        MemberListEntry randomMember = memberNode->memberList[randomIndex];
-        Address toAddress;
-        toAddress.addr[0] = randomMember.getid();
-        toAddress.addr[1] = 0;
-        toAddress.addr[2] = 0;
-        toAddress.addr[3] = 0;
-        toAddress.addr[4] = randomMember.getport();
+    if(par->globaltime % 6 == 0) {
+        for (int i = 0; i < 5; i++) {
+            int randomIndex = (int) rand() % memberNode->memberList.size();
+            MemberListEntry randomMember = memberNode->memberList[randomIndex];
+            Address toAddress;
+            toAddress.addr[0] = randomMember.getid();
+            toAddress.addr[1] = 0;
+            toAddress.addr[2] = 0;
+            toAddress.addr[3] = 0;
+            toAddress.addr[4] = randomMember.getport();
 
-        for(int j = 0; j < memberNode->memberList.size(); j++) {
-            MemberListEntry entry = memberNode->memberList[j];
-            Address address;
-            address.addr[0] = entry.getid();
-            address.addr[1] = 0;
-            address.addr[2] = 0;
-            address.addr[3] = 0;
-            address.addr[4] = entry.getport();
-            sendMessage(address, toAddress, JOINED);
+            for(int j = 0; j < memberNode->memberList.size(); j++) {
+                MemberListEntry entry = memberNode->memberList[j];
+                Address address;
+                address.addr[0] = entry.getid();
+                address.addr[1] = 0;
+                address.addr[2] = 0;
+                address.addr[3] = 0;
+                address.addr[4] = entry.getport();
+                sendMessage(address, toAddress, JOINED);
+            }
         }
     }
 }
