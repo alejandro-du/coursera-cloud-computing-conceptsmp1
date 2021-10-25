@@ -1,0 +1,5 @@
+=bin
+.DS_Store
+.vscode/
+bin/
+dbg.log
