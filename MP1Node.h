@@ -21,7 +21,7 @@
 #define TREMOVE 20
 #define TFAIL 5
 #define GOSSIP_TIME 5
-#define GOSSIP_FAN_OUT 2
+#define GOSSIP_FAN_OUT 5
 
 /*
  * Note: You can change/add any functions in MP1Node.{h,cpp}
