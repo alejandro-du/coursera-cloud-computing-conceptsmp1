@@ -1,4 +1,4 @@
-# coursera-cloud-computing-conceptsmp1
+# coursera-cloud-computing-concepts-mp1
 
 Here's my solution to the MP1 assignment of Coursera's Cloud Computing Concepts. Material is property of Coursera.
 
