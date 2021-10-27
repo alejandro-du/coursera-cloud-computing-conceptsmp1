@@ -20,6 +20,8 @@
  */
 #define TREMOVE 20
 #define TFAIL 5
+#define GOSSIP_TIME 5
+#define GOSSIP_FAN_OUT 2
 
 /*
  * Note: You can change/add any functions in MP1Node.{h,cpp}
@@ -31,9 +33,7 @@
 enum MsgTypes{
     JOINREQ,
     JOINREP,
-	JOINED,
-	HEARTBEAT,
-	FAILED,
+	GOSSIP,
     DUMMYLASTMSGTYPE
 };
 
@@ -44,8 +44,9 @@ enum MsgTypes{
  */
 typedef struct MessageHdr {
 	enum MsgTypes msgType;
-	Address address;
-}MessageHdr;
+	Address fromAddress;
+	void* data;
+} MessageHdr;
 
 /**
  * CLASS NAME: MP1Node
@@ -74,14 +75,13 @@ public:
 	void nodeLoop();
 	void checkMessages();
 	bool recvCallBack(void *env, char *data, int size);
-	void handleJoinReq(MessageHdr* message);
-	void handleJoinRep(MessageHdr* message);
-	void handleJoined(MessageHdr* message);
-	void handleHeartbeat(MessageHdr* message);
-	void sendMessage(Address address, Address toAddress, MsgTypes type);
+	MemberListEntry toMemberListEntry(Address address);
+	Address toAddress(MemberListEntry entry);
+	void handleJOINREQ(MessageHdr* joinReqMessage);
+	void handleJOINREP(MessageHdr* joinRepMessage);
+	void handleGOSSIP(MessageHdr* gossipMessage);
 	void nodeLoopOps();
-	void gossipMembershipList();
-	void sendHeartbeatMessages();
+	void gossipMemberList();
 	void removeFailed();
 	int isNullAddress(Address *addr);
 	Address getJoinAddress();
